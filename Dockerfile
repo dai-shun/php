@@ -9,7 +9,6 @@ RUN apt-get update \
         git \
         cron \
         dos2unix \
-        nginx \
             --no-install-recommends
 
 COPY ./install-composer.sh /

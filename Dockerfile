@@ -1,8 +1,6 @@
 FROM php:5.6-fpm
 
-RUN curl -s http://mirrors.163.com/.help/sources.list.jessie -o sources.list \
-    && mv -f sources.list /etc/apt/sources.list \
-    && apt-get update \
+RUN apt-get update \
     && apt-get install -y \
         libfreetype6-dev \
         libjpeg62-turbo-dev \

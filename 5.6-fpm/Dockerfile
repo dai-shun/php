@@ -11,9 +11,12 @@ RUN apt-get update \
         dos2unix \
             --no-install-recommends
 
-COPY ./install-composer.sh /
-COPY ./php.ini /usr/local/etc/php/
-COPY ./www.conf /usr/local/etc/php/
+COPY install-composer.sh /
+COPY php.ini /usr/local/etc/php/
+COPY www.conf /usr/local/etc/php/
+
+ENV HOST_IP 127.0.0.1
+ENV XDEBUG_LOG_PATH /app/xdebug.log
 
 RUN pecl install xdebug-2.5.0 \
     && docker-php-ext-install zip intl mbstring pdo_mysql exif bcmath \

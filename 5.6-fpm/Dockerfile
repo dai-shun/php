@@ -11,12 +11,13 @@ RUN apt-get update \
         dos2unix \
             --no-install-recommends
 
-COPY install-composer.sh /
-COPY php.ini /usr/local/etc/php/
-COPY www.conf /usr/local/etc/php/
+ENV COMPOSER_ALLOW_SUPERUSER 1
+ENV XDEBUG_REMOTE_HOST 127.0.0.1
+ENV XDEBUG_REMOTE_PORT 9000
 
-ENV HOST_IP 127.0.0.1
-ENV XDEBUG_LOG_PATH /app/xdebug.log
+COPY ./install-composer.sh /
+COPY ./php.ini /usr/local/etc/php/
+COPY ./www.conf /usr/local/etc/php/
 
 RUN pecl install xdebug-2.5.0 \
     && docker-php-ext-install zip intl mbstring pdo_mysql exif bcmath \
@@ -35,7 +36,7 @@ RUN apt-get purge -y g++ \
     && apt-get autoremove -y \
     && rm -r /var/lib/apt/lists/* \
     && rm -rf /tmp/* \
-    && dos2unix /install-composer.sh \
+    && dos2unix -q /install-composer.sh \
     && sh /install-composer.sh \
     && rm /install-composer.sh
 

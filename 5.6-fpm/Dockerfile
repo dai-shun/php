@@ -11,16 +11,21 @@ RUN apt-get update \
         dos2unix \
             --no-install-recommends
 
+# root用户使用composer不警告
 ENV COMPOSER_ALLOW_SUPERUSER 1
+# 默认远程调试指向本地
 ENV XDEBUG_REMOTE_HOST 127.0.0.1
+# 默认调试端口为9000
 ENV XDEBUG_REMOTE_PORT 9000
+# 默认不启用调试
+ENV XDEBUG_REMOTE_ENABLE 0
 
 COPY ./install-composer.sh /
 COPY ./php.ini /usr/local/etc/php/
 COPY ./www.conf /usr/local/etc/php/
 
 RUN pecl install xdebug-2.5.0 \
-    && docker-php-ext-install zip intl mbstring pdo_mysql exif bcmath \
+    && docker-php-ext-install zip intl mbstring pdo_mysql exif bcmath sysvsem shmop\
     && docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/ \
     && docker-php-ext-install gd
 

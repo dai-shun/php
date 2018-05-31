@@ -1,7 +1,7 @@
 version: "3"
 services:
   app:
-    build: daishun/php:5.6-fpm
+    image: daishun/php:5.6-fpm
     volumes:
       - ./:/app
       - ~/.composer-docker/cache:/root/.composer/cache
@@ -14,7 +14,7 @@ services:
       - 80:80
     volumes:
       - ./:/app
-      - ./docker/nginx/vhost.conf:/etc/nginx/conf.d/vhost.conf
+      - ./vhost.conf:/etc/nginx/conf.d/vhost.conf
     depends_on:
       - app
 

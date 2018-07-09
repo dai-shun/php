@@ -1,3 +1,4 @@
-# php
-
-php开发环境，支持yii2\xdebug
+# php扩展
+- redis
+- memecached
+- xdebug

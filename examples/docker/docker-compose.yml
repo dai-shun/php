@@ -1,0 +1,30 @@
+version: "3"
+services:
+  php5.6:
+    image: daishun/php:5.6-fpm
+    volumes:
+      - ../:/app
+      - ~/.composer-docker/cache:/root/.composer/cache
+    env_file:
+      - ./php5.6/.env
+
+  php7.1:
+    image: daishun/php:7.1-fpm
+    volumes:
+      - ../:/app
+      - ~/.composer-docker/cache:/root/.composer/cache
+    env_file:
+      - ./php7.1/.env
+
+  nginx:
+    image: nginx:1.12-alpine
+    ports:
+      - 80:80
+    volumes:
+      - ../:/app
+      - ./sites:/etc/nginx/conf.d
+    depends_on:
+      - php5.6
+      - php7.1
+
+
